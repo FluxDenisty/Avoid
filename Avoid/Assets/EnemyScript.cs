@@ -26,12 +26,14 @@ public class EnemyScript : MonoBehaviour {
 			if (e == this) {continue;}
 			Vector2 edist = e.transform.position - this.transform.position;
 			if ((edist.normalized - diff.normalized).magnitude < 0.2f) {continue;}
-			if (edist.magnitude < 60f) {
-				influ += -0.05f * edist.normalized * (60f - edist.magnitude);
+			if (edist.magnitude < 3f) {
+				influ += -0.09f * edist.normalized * (60f - edist.magnitude);
 				num++;
 			}
 		}
-		diff += influ / num;
+		if (num > 0) {
+			diff += influ / num;
+		}
 
 		diff.Normalize();
 		this.rigidBody.AddForce(diff * 5.0f);
