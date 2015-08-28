@@ -20,14 +20,18 @@ public class EnemyScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Vector2 diff = PlayerScript.instance.transform.position - this.transform.position;
+		float num = 0;
+		Vector2 influ = Vector2.zero;
 		foreach (EnemyScript e in EnemyScript.enemies) {
 			if (e == this) {continue;}
 			Vector2 edist = e.transform.position - this.transform.position;
 			if ((edist.normalized - diff.normalized).magnitude < 0.2f) {continue;}
 			if (edist.magnitude < 60f) {
-				diff += -0.05f * edist.normalized * (60f - edist.magnitude);
+				influ += -0.05f * edist.normalized * (60f - edist.magnitude);
+				num++;
 			}
 		}
+		diff += influ / num;
 
 		diff.Normalize();
 		this.rigidBody.AddForce(diff * 5.0f);
