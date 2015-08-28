@@ -18,11 +18,14 @@ public class PlayerScript : MonoBehaviour {
 		Vector2 diff = Vector2.zero;
 		if (Input.GetKey(KeyCode.W)) {
 			diff += Vector2.up;
-		} else if (Input.GetKey(KeyCode.A)) {
+		}
+		if (Input.GetKey(KeyCode.A)) {
 			diff += Vector2.left;
-		} else if (Input.GetKey(KeyCode.S)) {
+		}
+		if (Input.GetKey(KeyCode.S)) {
 			diff += Vector2.down;
-		} else if (Input.GetKey(KeyCode.D)) {
+		}
+		if (Input.GetKey(KeyCode.D)) {
 			diff += Vector2.right;
 		}
 
