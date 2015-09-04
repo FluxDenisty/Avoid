@@ -6,7 +6,7 @@ public class EnemyScript : MonoBehaviour {
 
 	public static List<EnemyScript> enemies = new List<EnemyScript>();
 
-	private Rigidbody2D rigidBody;
+	protected Rigidbody2D rigidBody;
 
 	void Awake() {
 		EnemyScript.enemies.Add(this);
@@ -18,7 +18,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected virtual void Update () {
 		Vector2 diff = PlayerScript.instance.transform.position - this.transform.position;
 		float num = 0;
 		Vector2 influ = Vector2.zero;

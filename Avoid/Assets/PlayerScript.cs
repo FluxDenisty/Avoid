@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour {
 	public Rigidbody2D rigidBody;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		this.rigidBody = this.GetComponent<Rigidbody2D>();
 		PlayerScript.instance = this;
 	}
@@ -29,9 +29,12 @@ public class PlayerScript : MonoBehaviour {
 			diff += Vector2.right;
 		}
 
-		this.rigidBody.AddForce(diff * 10.0f);
-		if (this.rigidBody.velocity.magnitude > 4.5f) {
-			this.rigidBody.velocity = this.rigidBody.velocity * (4f / this.rigidBody.velocity.magnitude);
+		const float MAX_SPEED = 5.5f;
+		const float ACCELERATION = 15.0f;
+
+		this.rigidBody.AddForce(diff.normalized * ACCELERATION);
+		if (this.rigidBody.velocity.magnitude > MAX_SPEED) {
+			this.rigidBody.velocity = this.rigidBody.velocity * (MAX_SPEED / this.rigidBody.velocity.magnitude);
 		}
 	}
 
