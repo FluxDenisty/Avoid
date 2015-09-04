@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -12,6 +13,9 @@ public class GameController : MonoBehaviour {
 
 	[SerializeField]
 	List<Transform> walls = new List<Transform>();
+
+	[SerializeField]
+	Text scoreText = null;
 
 	PlayerScript player = null;
 
@@ -38,16 +42,20 @@ public class GameController : MonoBehaviour {
 		this.walls[0].localScale = this.walls[1].localScale = new Vector3(size * 6.5f, 1f, 1f);
 		this.walls[2].localScale = this.walls[3].localScale = new Vector3(1f, size * 3.5f, 1f);
 
-		if (timer > 3f) {
-			Vector3 pos;
-			do {
-				pos = new Vector3(Random.Range(-(size * (9f/5f) - 1f), size * (9f/5f) - 1f), Random.Range(-(size - 1f), size - 1f), 0); 
-			} while ((pos - PlayerScript.instance.transform.position).magnitude < 5f);
-
-			EnemyScript type = (Random.value < 0.6f ? this.enemyPrefab : this.chargingPrefab);
-			EnemyScript enemy = GameObject.Instantiate<EnemyScript>(type);
-			enemy.transform.position = pos;
+		const float SPAWN_TIMER = 3f;
+		if (timer > SPAWN_TIMER) {
 			timer = 0;
+
+			if (PlayerScript.instance.gameObject.activeInHierarchy) {
+				Vector3 pos;
+				do {
+					pos = new Vector3(Random.Range(-(size * (9f/5f) - 1f), size * (9f/5f) - 1f), Random.Range(-(size - 1f), size - 1f), 0); 
+				} while ((pos - PlayerScript.instance.transform.position).magnitude < 5f);
+
+				EnemyScript type = (Random.value < 0.6f ? this.enemyPrefab : this.chargingPrefab);
+				EnemyScript enemy = GameObject.Instantiate<EnemyScript>(type);
+				enemy.transform.position = pos;
+			}
 		}
 
 
@@ -59,5 +67,8 @@ public class GameController : MonoBehaviour {
 			player.rigidBody.velocity = Vector3.zero;
 			this.gameTime = 0;
 		}
+
+		scoreText.text = EnemyScript.enemies.Count.ToString();
+		scoreText.color = new Color(1f, (1f - this.timer / SPAWN_TIMER), (1f - this.timer / SPAWN_TIMER));
 	}
 }

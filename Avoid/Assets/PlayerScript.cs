@@ -7,6 +7,8 @@ public class PlayerScript : MonoBehaviour {
 
 	public Rigidbody2D rigidBody;
 
+	float gameTime = 0f;
+
 	// Use this for initialization
 	void Awake () {
 		this.rigidBody = this.GetComponent<Rigidbody2D>();
@@ -15,6 +17,8 @@ public class PlayerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		this.gameTime += Time.deltaTime;
+
 		Vector2 diff = Vector2.zero;
 		if (Input.GetKey(KeyCode.W)) {
 			diff += Vector2.up;
@@ -29,8 +33,8 @@ public class PlayerScript : MonoBehaviour {
 			diff += Vector2.right;
 		}
 
-		const float MAX_SPEED = 5.5f;
-		const float ACCELERATION = 15.0f;
+		float MAX_SPEED = 5.5f * (1f + this.gameTime * 0.01f);
+		float ACCELERATION = 15.0f * (1f + this.gameTime * 0.05f);
 
 		this.rigidBody.AddForce(diff.normalized * ACCELERATION);
 		if (this.rigidBody.velocity.magnitude > MAX_SPEED) {
@@ -42,5 +46,9 @@ public class PlayerScript : MonoBehaviour {
 		if (coll.gameObject.tag == "Enemy") {
 			this.gameObject.SetActive(false);
 		}
+	}
+
+	void OnDisable() {
+		this.gameTime = 0f;
 	}
 }
