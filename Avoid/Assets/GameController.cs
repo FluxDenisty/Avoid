@@ -69,6 +69,7 @@ public class GameController : MonoBehaviour {
 			player.gameObject.transform.localPosition = Vector3.zero;
 			player.rigidBody.velocity = Vector3.zero;
 			this.gameTime = 0;
+			this.timer = 0;
 		}
 
 		scoreText.text = EnemyScript.enemies.Count.ToString();

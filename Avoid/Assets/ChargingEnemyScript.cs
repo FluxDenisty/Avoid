@@ -10,7 +10,7 @@ public class ChargingEnemyScript : EnemyScript {
 
 		if (this.timer > 2.1f) {
 			this.timer = 0f;
-			Vector3 target = PlayerScript.instance.transform.localPosition + (Vector3)(PlayerScript.instance.rigidBody.velocity * 1.3f);
+			Vector3 target = PlayerScript.instance.transform.localPosition + (Vector3)(PlayerScript.instance.rigidBody.velocity * 0.5f);
 			Vector3 force =  target - this.transform.localPosition;
 			force = force.normalized * 400f;
 			this.rigidBody.AddForce(force);

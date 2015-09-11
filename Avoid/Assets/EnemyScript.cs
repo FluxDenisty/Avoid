@@ -36,7 +36,7 @@ public class EnemyScript : MonoBehaviour {
 		}
 
 		diff.Normalize();
-		this.rigidBody.AddForce(diff * 5.0f);
+		this.rigidBody.AddForce(diff * 300.0f * Time.deltaTime);
 		if (this.rigidBody.velocity.magnitude > 4.0f) {
 			this.rigidBody.velocity = this.rigidBody.velocity * (4f / this.rigidBody.velocity.magnitude);
 		}

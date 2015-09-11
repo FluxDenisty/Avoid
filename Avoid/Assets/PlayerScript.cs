@@ -34,9 +34,9 @@ public class PlayerScript : MonoBehaviour {
 		}
 
 		float MAX_SPEED = 5.5f * (1f + this.gameTime * 0.01f);
-		float ACCELERATION = 15.0f * (1f + this.gameTime * 0.05f);
+		float ACCELERATION = 900.0f * (1f + this.gameTime * 0.05f);
 
-		this.rigidBody.AddForce(diff.normalized * ACCELERATION);
+		this.rigidBody.AddForce(diff.normalized * ACCELERATION * Time.deltaTime);
 		if (this.rigidBody.velocity.magnitude > MAX_SPEED) {
 			this.rigidBody.velocity = this.rigidBody.velocity * (MAX_SPEED / this.rigidBody.velocity.magnitude);
 		}
